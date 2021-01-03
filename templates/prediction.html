@@ -1,0 +1,20 @@
+<title>Is This A Cat APP</title>
+<div id="app">
+    
+    <div class="header">
+        <h1>Is This A Cat?</h1>
+    </div>
+   
+    <div class="upload-section-title">
+        <h2>Thank You. The thing you just uploaded is a ...</h2>    
+    </div>
+    <div class="results">
+        <p> ... {{results[0]}}! </p>
+        <p> Obtained score: {{results[1]}} </p>
+    </div>
+    <br>
+    <br>
+    <form method=get enctype=multipart/form-data action=" {{ url_for('index') }} ">
+        <input type=submit value="Go Back To Homepage">
+    </form>
+</div>

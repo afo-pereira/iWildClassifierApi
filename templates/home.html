@@ -1,0 +1,32 @@
+<!DOCKTYPE html>
+<html>
+    <link async href="http://fonts.googleapis.com/css?family=Acme" data-generated="http://enjoycss.com" rel="stylesheet" type="text/css"/>
+    <head>
+        <style>
+        </style>
+    </head>
+    <body>
+        <title>Is This A Cat APP</title>
+        <div id="app">
+            <div class="left-panel">
+                <div class="header">
+                    <h1>Is This A Cat?</h1>
+                </div>
+
+                <div class="upload-section-title">
+                    <h2>Please choose an image file to submit:</h2>
+                </div>
+
+                <div class="upload-section">
+                    <form method=post enctype=multipart/form-data action=" {{ url_for('prediction') }} ">
+                        {# This hidden_tag is a CSRF security feature. #}
+                        {{ form.hidden_tag() }}
+                        <input type=file name=photo label="Choose file to upload">
+                        <input type=submit value="Get Prediction">
+                    </form>
+                </div>
+            </div>
+            <div class="right-panel"></div>
+        </div>
+    </body>
+</html>
