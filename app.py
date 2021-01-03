@@ -85,6 +85,8 @@ def prediction():
 
 def return_prediction(filename):
     input_image_matrix = _image_process(filename)
+    # Deleting the image after using it, so it wont occupy so much disc space during test
+    _delete_image(filename)
     score = cnn_model.predict(input_image_matrix)
     class_index = cnn_model.predict_classes(input_image_matrix, batch_size=1)
 
@@ -98,6 +100,10 @@ def _image_process(filename):
     input_matrix = np.vstack([x])
     input_matrix /= 255.
     return input_matrix
+
+
+def _delete_image(filename):
+    os.remove('uploads/' + filename)
 
 
 if __name__ == '__main__':
