@@ -46,7 +46,19 @@ def f1_m(y_true, y_pred):
 # Load the model:
 cnn_model = load_model('NoEmpty_LowRes_OverSampling_DataAugmentation.h5',
                        custom_objects={"f1_m": f1_m, "precision_m": precision_m, "recall_m": recall_m})
-CLASS_INDICES = {0: 'cat', 1: 'dog'}
+CLASS_INDICES = {0: 'deer',
+                 1: 'fox',
+                 2: 'coyote',
+                 3: 'raccoon',
+                 4: 'skunk',
+                 5: 'bobcat',
+                 6: 'cat',
+                 7: 'dog',
+                 8: 'opossum',
+                 9: 'mountain_lion',
+                 10: 'squirrel',
+                 11: 'rodent',
+                 12: 'rabbit'}
 
 
 # Form where image will be uploaded:
@@ -73,16 +85,14 @@ def prediction():
 
 def return_prediction(filename):
     input_image_matrix = _image_process(filename)
-    # img = image.load_img('uploads/' + filename, target_size=(64, 64))
     score = cnn_model.predict(input_image_matrix)
     class_index = cnn_model.predict_classes(input_image_matrix, batch_size=1)
 
-    # return CLASS_INDICES[class_index[0]], score
-    return class_index[0], score
+    return CLASS_INDICES[class_index[0]], score
 
 
 def _image_process(filename):
-    img = image.load_img('uploads/' + filename, target_size=(96,128))
+    img = image.load_img('uploads/' + filename, target_size=(96, 128))
     x = image.img_to_array(img)
     x = np.expand_dims(x, axis=0)
     input_matrix = np.vstack([x])
