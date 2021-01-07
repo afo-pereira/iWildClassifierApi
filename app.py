@@ -118,6 +118,7 @@ def _image_process(filename):
 
 
 def _delete_image():
+    # Due to limited space on Heroku, it's important to delete the images
     folder = 'static/uploads/'
     for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
