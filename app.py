@@ -1,5 +1,6 @@
 import numpy as np
-import os, shutil
+import os
+import shutil
 
 from flask import Flask, render_template, request, url_for
 from flask_uploads import UploadSet, configure_uploads, IMAGES, patch_request_class
@@ -68,21 +69,15 @@ CLASS_INDICES = {0: 'deer',
 
 
 # Form where image will be uploaded:
-#class UploadForm(FlaskForm):
-#    photo = FileField(validators=[FileAllowed(photos, 'Image Only!'), FileRequired('Choose a file to upload!')])
-#    submit = SubmitField('Get Prediction')
+class UploadForm(FlaskForm):
+    photo = FileField(validators=[FileAllowed(photos, 'Image Only!'), FileRequired('Choose a file to upload!')])
+    submit = SubmitField('Get Prediction')
 
 
 @app.route('/', methods=['GET'])
 def index():
     _delete_image()
-    form = FlaskForm(csrf_enabled=False)
-    if form.validate_on_submit():
-        f = form.photo.data
-        filename = secure_filename(f.filename)
-        f.save(os.path.join('static/uploads', filename))
-    return render_template('home.html', form=form)
-    #return render_template('home.html', form=UploadForm())
+    return render_template('home.html', form=UploadForm())
 
 
 @app.route('/prediction/', methods=['POST'])
@@ -112,8 +107,6 @@ def display_image(filename):
 
 def return_prediction(filename):
     input_image_matrix = _image_process(filename)
-    # Deleting the image after using it, so it wont occupy so much disc space during test
-    # _delete_image(filename)
     score = cnn_model.predict(input_image_matrix)
     class_index = cnn_model.predict_classes(input_image_matrix, batch_size=1)
 
