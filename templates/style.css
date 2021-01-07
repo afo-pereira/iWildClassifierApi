@@ -1,0 +1,9 @@
+#upload_form {
+  position: relative;
+  float: left;
+}
+
+#button_upload {
+  position: relative;
+  float: right;
+}

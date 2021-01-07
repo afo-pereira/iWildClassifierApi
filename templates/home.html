@@ -15,8 +15,12 @@
             <form method=post enctype=multipart/form-data action=" {{ url_for('prediction') }} ">
                 {# This hidden_tag is a CSRF security feature. #}
                 {{ form.hidden_tag() }}
-                <input type=file name=photo label="Choose file to upload">
-                <input type=submit value="Get Prediction">
+                <div id="upload_form">
+                    <input type=file name=photo label="Choose file to upload">
+                </div>
+                <div id="button_upload">
+                    <input type=submit value="Get Prediction">
+                </div>
             </form>
         </div>
     </div>

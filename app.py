@@ -95,7 +95,8 @@ def prediction():
         results = return_prediction(filename=filename)
     except:
         return render_template('404.html')
-    return render_template('prediction.html', results=results, filename=filename)
+    full_filename = os.path.join(app.config['UPLOADED_PHOTOS_DEST'], filename)
+    return render_template('prediction.html', results=results, filename=full_filename)
 
 
 @app.route('/context', methods=['GET'])

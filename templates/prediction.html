@@ -3,12 +3,21 @@
 
 {% block app_content %}
 <h1>Thank You. The thing you just uploaded is a ...</h1>
-
-<div><p>{{results[0]}}!</p></div>
-<div><p>Obtained score: {{results[1]}}</p></div>
-<form method=get enctype=multipart/form-data action=" {{ url_for('index') }} ">
-    <input type=submit value="Go Back To Homepage">
-</form>
-<img src="file://uploads/I348202.jpg" class="img-fluid" alt="Responsive image">
+<section>
+    <div class="left-panel">
+        <div><p>{{results[0]}}!</p></div>
+        <div><p>Obtained score: {{results[1]}}</p></div>
+        <form method=get enctype=multipart/form-data action=" {{ url_for('index') }} ">
+            <input type=submit value="Go Back To Homepage">
+        </form>
+    </div>
+</section>
+<section>
+    <div class="right-panel">
+        <div class="image">
+            <img src={{ filename }} class="img-fluid" alt="Responsive image">
+        </div>
+    </div>
+</section>
 {% endblock %}
 
