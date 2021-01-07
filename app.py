@@ -17,10 +17,7 @@ base_dir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecretkey'
-app.config['UPLOADED_PHOTOS_DEST'] = os.path.join(base_dir, 'uploads')
-
-UPLOAD_FOLDER = 'static/uploads/'
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOADED_PHOTOS_DEST'] = os.path.join(base_dir, 'static/uploads')
 
 bootstrap = Bootstrap(app)
 
@@ -84,14 +81,13 @@ def index():
 def prediction():
     # Saving file to folder
     file = request.files['photo']
-    filename = secure_filename(file.filename)
-    file.save(os.path.join('uploads', filename))
     try:
+        filename = secure_filename(file.filename)
+        file.save(os.path.join('static/uploads', filename))
         results = return_prediction(filename=filename)
     except:
         return render_template('404.html')
-    full_filename = os.path.join(app.config['UPLOADED_PHOTOS_DEST'], filename)
-    return render_template('prediction.html', results=results, filename=full_filename)
+    return render_template('prediction.html', results=results, filename=filename)
 
 
 @app.route('/context', methods=['GET'])
@@ -99,22 +95,21 @@ def project_context():
     return render_template('projectContext.html')
 
 
-@app.route('/display/<filename>')
+@app.route("/display_image/<filename>", methods=['GET'])
 def display_image(filename):
-    # print('display_image filename: ' + filename)
-    return redirect(url_for('uploads', filename=filename), code=301)
+    return redirect(url_for('static', filename='uploads/' + filename), code=301)
 
 
 def return_prediction(filename):
     input_image_matrix = _image_process(filename)
     score = cnn_model.predict(input_image_matrix)
-    class_index = cnn_model.predict_classes(input_image_matrix, batch_size=1)
+    class_index = np.argmax(score, axis=-1)
 
     return CLASS_INDICES[class_index[0]], score
 
 
 def _image_process(filename):
-    img = image.load_img('uploads/' + filename, target_size=(96, 128))
+    img = image.load_img('static/uploads/' + filename, target_size=(96, 128))
     x = image.img_to_array(img)
     x = np.expand_dims(x, axis=0)
     input_matrix = np.vstack([x])
@@ -123,8 +118,7 @@ def _image_process(filename):
 
 
 def _delete_image():
-    # os.remove('uploads/' + filename)
-    folder = 'uploads/'
+    folder = 'static/uploads/'
     for filename in os.listdir(folder):
         file_path = os.path.join(folder, filename)
         try:
