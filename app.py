@@ -105,7 +105,7 @@ def return_prediction(filename):
     score = cnn_model.predict(input_image_matrix)
     class_index = np.argmax(score, axis=-1)
 
-    return CLASS_INDICES[class_index[0]], score
+    return CLASS_INDICES[class_index[0]], score.max()
 
 
 def _image_process(filename):
@@ -121,14 +121,15 @@ def _delete_image():
     # Due to limited space on Heroku, it's important to delete the images
     folder = 'static/uploads/'
     for filename in os.listdir(folder):
-        file_path = os.path.join(folder, filename)
-        try:
-            if os.path.isfile(file_path) or os.path.islink(file_path):
-                os.unlink(file_path)
-            elif os.path.isdir(file_path):
-                shutil.rmtree(file_path)
-        except Exception as e:
-            print('Failed to delete %s. Reason: %s' % (file_path, e))
+        if not filename.endswith('txt'):
+            file_path = os.path.join(folder, filename)
+            try:
+                if os.path.isfile(file_path) or os.path.islink(file_path):
+                    os.unlink(file_path)
+                elif os.path.isdir(file_path):
+                    shutil.rmtree(file_path)
+            except Exception as e:
+                print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
 if __name__ == '__main__':
