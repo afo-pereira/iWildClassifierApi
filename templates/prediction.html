@@ -5,9 +5,8 @@
 <section
         class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
     <div class="content">
-        <h2>Thank You. The thing you just uploaded is a ...</h2>
+        <h2>Thank You. The animal in the image you uploaded is a ... <b>{{results[0]}}!!</b></h2>
         <div class="left-panel">
-            <div><p>{{results[0]}}!</p></div>
             <div><p>Obtained score: {{results[1]}}</p></div>
             <form method=get enctype=multipart/form-data action=" {{ url_for('index') }} ">
                 <input type=submit value="Go Back To Homepage">
