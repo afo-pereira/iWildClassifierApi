@@ -5,6 +5,7 @@ certifi==2020.12.5
 chardet==4.0.0
 click==7.1.2
 dominate==2.6.0
+wheel==0.35
 Werkzeug==0.16.0
 Flask==1.1.2
 Flask-Bootstrap==3.3.7.1
@@ -48,4 +49,3 @@ wincertstore==0.2
 wrapt==1.12.1
 WTForms==2.3.3
 zipp==3.4.0
-wheel==0.35
