@@ -73,7 +73,7 @@ class UploadForm(FlaskForm):
 
 @app.route('/', methods=['GET'])
 def index():
-    #_delete_image()
+    _delete_image()
     return render_template('home.html', form=UploadForm())
 
 
